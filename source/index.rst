@@ -30,6 +30,7 @@ Contents:
 .. toctree::
    :hidden:
 
+   rnaseqbackground   
    faq
    mactut
    wintut
@@ -38,7 +39,7 @@ Contents:
    releasenotes
    citationacknowledgements
    wishlist
-   rnaseqbackground
+
    
 * **Contribute:** If you would like to contribute to the project, the source code for each platform can be found in the `GitHub repository <http://www.github.com/biobenkj>`_.
 
