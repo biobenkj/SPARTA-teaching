@@ -53,7 +53,7 @@
 <li><a class="reference internal" href="#basicworkflow"><span>Basic analysis procedure</span></a></li>
 <li><a class="reference internal" href="#trimmomatic"><span>Trimmomatic</span></a></li>
 <li><a class="reference internal" href="#fastqc"><span>FastQC</span></a></li>
-<li><span class="xref std std-ref">bowtie</span></li>
+<li><a class="reference internal" href="#bowtie"><span>Bowtie</span></a></li>
 <li><span class="xref std std-ref">htseq</span></li>
 <li><span class="xref std std-ref">edger</span></li>
 </ol>
@@ -165,6 +165,33 @@ TrimmomaticSE: Completed successfully
 </div>
 <p>We can open the report file in a browser like FireFox. Here are two different reports <code class="file docutils literal"><span class="pre">report1.html</span></code> and <code class="file docutils literal"><span class="pre">report2.html</span></code> What do we think? Good or bad data?</p>
 <p>Please work with a neighbor and discuss the FastQC analysis reports. Put a green sticky note on your computer once you have done this and viewed the results in a browser.</p>
+</div>
+<div class="section" id="bowtie">
+<span id="id4"></span><h2>Bowtie<a class="headerlink" href="#bowtie" title="Permalink to this headline">¶</a></h2>
+<p><strong>What is Bowtie?</strong></p>
+<p>&#8220;Bowtie is an ultrafast, memory-efficient short read aligner geared toward quickly aligning large sets of short DNA sequences (reads) to large genomes... Bowtie indexes the genome with a <a class="reference external" href="http://en.wikipedia.org/wiki/Burrows%E2%80%93Wheeler_transform">Burrows-Wheeler</a> index to keep its memory footprint small...&#8221;</p>
+<p><strong>What isn&#8217;t Bowtie?</strong></p>
+<p>&#8220;Bowtie is not a general-purpose alignment tool like MUMer, BLAST, or Vmatch. Bowtie works best when aligning short reads to large genomes, though it supports arbitrarily small reference sequences (e.g. amplicons) and reads as long as 1024 bases. Bowtie is designed to be extremely fast for sets of short reads where (a) many of the reads have at least one good, valid alignment, (b) many of the reads are relatively high-quality, and (c) the number of alignments reported per read is small (close to 1).&#8221;</p>
+<p><em>From: http://bowtie-bio.sourceforge.net/manual.shtml#what-is-bowtie</em></p>
+<p>In order for Bowtie to work, we need to provide it with trimmed reads files and the reference genome in a FASTA format file. This type of file typically ends in .fa or .fasta.</p>
+<p>We can acquire our favorite reference genome and feature file (GTF) from the <a class="reference external" href="http://bacteria.ensembl.org/info/website/ftp/index.html">Ensembl website</a>.</p>
+<p>Once we get our data from the RTSF, we will download the <em>L. reuteri</em> JCM1112 <code class="xref download docutils literal"><span class="pre">genome</span> <span class="pre">file</span></code> and <code class="xref download docutils literal"><span class="pre">feature</span> <span class="pre">file</span></code>. The feature file contains data to inform HTSeq where the start and end of a gene is. This is important as HTSeq produces the number of transcripts per gene identified in a given sample.</p>
+</div>
+<div class="section" id="htseq">
+<span id="id5"></span><h2>HTSeq<a class="headerlink" href="#htseq" title="Permalink to this headline">¶</a></h2>
+<p>This step will take the longest time, computationally, out of the entire workflow.</p>
+<p><a class="reference external" href="http://www-huber.embl.de/users/anders/HTSeq/doc/overview.html">HTSeq</a> is a powerful Python package for analyzing NGS data. For our purposes, we will be using the counting feature of HTSeq. Let&#8217;s have a look at the way HTSeq can <a class="reference external" href="http://www-huber.embl.de/users/anders/HTSeq/doc/count.html#count">count whether a read maps to a gene</a>.</p>
+<p>We need to supply htseq-count with a couple things:</p>
+<ol class="arabic simple">
+<li>A genome feature file (GTF) so that HTSeq &#8220;knows&#8221; where the start and end of a gene is</li>
+<li>The <em>.sam</em> file that was output from Bowtie</li>
+</ol>
+</div>
+<div class="section" id="differential-gene-expression-with-edger">
+<span id="edger"></span><h2>Differential gene expression with edgeR<a class="headerlink" href="#differential-gene-expression-with-edger" title="Permalink to this headline">¶</a></h2>
+<p>Up to this point we have done several things: trimmed, QC&#8217;d, aligned, and counted reads that mapped to each gene. Now, we will finally move to the step where we will analyze the differential gene expression between the untreated and treated <em>L. reuteri</em> samples!</p>
+<p>To do this, we have chosen to utilize an analysis package written in the R programming language called <a class="reference external" href="http://bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf">edgeR</a>. edgeR stands for differential expression analysis of digital gene expression data in R. This is a fantastic tool that is actively maintained (as seen by the date of the most recent user guide update) and fairly easy to use. Several diagnostic plots are produced throughout the analysis that provide meaningful information as to whether we can even perform differential gene expression between samples and if there are batch effects we have to deal with.</p>
+<p>RNA-seq data does not typically assume a normal (Gaussian) distribution, so to glean which genes are changing in a statistically significant manner, we have to model the data slightly differently. EdgeR implements what is called a <a class="reference external" href="http://en.wikipedia.org/wiki/Negative_binomial_distribution#Related_distributions">negative binomial distribution</a>, sometimes referred to as a gamma-Poisson model. If you <em>really</em> enjoy statistics and would like to dig into the mathematical underpinnings of this software, see the references at the bottom of this page. If you are less interested in understanding the math behind all of this, here is the short summary: we need to examine the data to make sure they separate enough between treatments to determine differential gene expression and we <em>always</em> use a false-discovery rate correction to determine significance (even then, it&#8217;s worth looking at the fold-change differences to decide if it is &#8220;real&#8221;; though this is slightly more arbitrary).</p>
 <p><strong>Presentation time!</strong></p>
 <p>Please have one person from each treatment group come and present a <em>representative</em> report from each treatment, assessing the results.</p>
 <div class="admonition note">
@@ -187,6 +214,9 @@ TrimmomaticSE: Completed successfully
 <li><a class="reference internal" href="#basic-analysis-procedure">Basic analysis procedure</a></li>
 <li><a class="reference internal" href="#trimmomatic">Trimmomatic</a></li>
 <li><a class="reference internal" href="#fastqc">FastQC</a></li>
+<li><a class="reference internal" href="#bowtie">Bowtie</a></li>
+<li><a class="reference internal" href="#htseq">HTSeq</a></li>
+<li><a class="reference internal" href="#differential-gene-expression-with-edger">Differential gene expression with edgeR</a></li>
 </ul>
 </li>
 </ul>

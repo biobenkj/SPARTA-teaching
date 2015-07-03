@@ -15,9 +15,9 @@ Before we dig into the data and begin trimming and aligning the reads to the gen
 
 #. :ref:`bowtie`
 
-#. :ref:`htseq`
+#. :ref:`htseqbackground`
 
-#. :ref:`edger`
+#. :ref:`edgerbackground`
 
 
 .. _rnaseqbackgroundinfo:
@@ -203,7 +203,7 @@ We can acquire our favorite reference genome and feature file (GTF) from the `En
 Once we get our data from the RTSF, we will download the *L. reuteri* JCM1112 :download:`genome file <trimmedlreuterijcm1112.fa>` and :download:`feature file <alignlreuterijcm1112.gtf>`. The feature file contains data to inform HTSeq where the start and end of a gene is. This is important as HTSeq produces the number of transcripts per gene identified in a given sample.
 
 
-.. _htseq:
+.. _htseqbackground:
 
 HTSeq
 -----
@@ -219,11 +219,10 @@ We need to supply htseq-count with a couple things:
 #. The *.sam* file that was output from Bowtie
 
 
-.. _edger:
+.. _edgerbackground:
 
 Differential gene expression with edgeR
 ---------------------------------------
-
 
 Up to this point we have done several things: trimmed, QC'd, aligned, and counted reads that mapped to each gene. Now, we will finally move to the step where we will analyze the differential gene expression between the untreated and treated *L. reuteri* samples!
 

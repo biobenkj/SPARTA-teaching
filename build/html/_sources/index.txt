@@ -1,5 +1,5 @@
-SPARTA: Simple Program for Automated reference-based bacterial RNA-seq Transcriptome Analysis
-=============================================================================================
+RNA-seq teaching module using SPARTA: Simple Program for Automated reference-based bacterial RNA-seq Transcriptome Analysis
+===========================================================================================================================
 
 SPARTA is a workflow aimed at analyzing single-end Illumina RNA-seq data. The software is
 supported on Windows, Mac OS X, and Linux platforms. The workflow combines several tools:
@@ -8,6 +8,9 @@ Trimmomatic (read trimming/adapter removal), FastQC (read quality analysis), Bow
 and edgeR (differential gene expression analysis). Within the differential gene expression
 analysis step, batch effects can be detected and the user is warned of the potential, unintended
 additional variable. The analysis procedure is outlined below.
+
+However, before we can dive into doing the data analysis with our own data or some example data
+it is worth having a look at some :ref:`background information <rnaseqbackground>` first.
 
 .. image:: workflowprocedure.jpg
 	:align: center
