@@ -115,10 +115,10 @@ slightly different tools and procedure. The data that we will be working with is
 Illumina reads.
 
 Let's brainstorm for a minute:
-    If the Illumina sequencing procedure (as seen in the video above) requires specific adapters, what are some ways we could remove them?
-    What are some potential issues specifically with our reads that could cause misalignments or no alignments at all to a reference genome?
-    Why don't we use a reference transcriptome instead of a genome since RNA-seq is a *transcriptional* profiling experiment?
-    What are other genomic features in bacteria that could potentially be identified using RNA-seq data?
+    * If the Illumina sequencing procedure (as seen in the video above) requires specific adapters, what are some ways we could remove them?
+    * What are some potential issues specifically with our reads that could cause misalignments or no alignments at all to a reference genome?
+    * Why don't we use a reference transcriptome instead of a genome since RNA-seq is a *transcriptional* profiling experiment?
+    * What are other genomic features in bacteria that could potentially be identified using RNA-seq data?
     
 
 .. _trimmomatic:
